@@ -21,7 +21,7 @@ public class MemberListControllerV3 implements ControllerV3 {
     public ModelView process(Map<String, String> paramMap) {
         List<Member> members = memberRepository.findAll();
 
-        ModelView mv = new ModelView("members");
+        ModelView mv = new ModelView("/");
         mv.getModel().put("members", members);
         return mv;
     }

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "frontControllerServletV3", urlPatterns = "/front-controller/v3/*")
+@WebServlet(name = "frontControllerServlet3", urlPatterns = "/front-controller/v3/*")
 public class FrontControllerServletV3 extends HttpServlet {
 
     private Map<String, ControllerV3> controllerMap = new HashMap<>();
@@ -42,7 +42,6 @@ public class FrontControllerServletV3 extends HttpServlet {
         }
 
         Map<String, String> paramMap = createParamMap(request);
-
         ModelView mv = controller.process(paramMap);
 
         String viewName = mv.getViewName();
@@ -51,15 +50,17 @@ public class FrontControllerServletV3 extends HttpServlet {
 
     }
 
-    private Map<String, String> createParamMap(HttpServletRequest request) {
-        Map<String, String> paramMap = new HashMap<>();
-        request.getParameterNames().asIterator()
-                .forEachRemaining(paramName -> paramMap.put(paramName, request.getParameter(paramName)));
-        return paramMap;
-    }
-
     private MyView viewResolver(String viewName) {
         return new MyView("/WEB-INF/views/" + viewName + ".jsp");
     }
 
+    private Map<String, String> createParamMap(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String age = request.getParameter("age");
+
+        Map<String, String> map = new HashMap<>();
+        map.put(username, age);
+
+        return map;
+    }
 }
